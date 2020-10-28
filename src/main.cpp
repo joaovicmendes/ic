@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <queue>
 #include "./list.h"
+#include "./imbal.h"
 
 int main(int argc, char **argv)
 {
@@ -33,6 +34,8 @@ int main(int argc, char **argv)
         jobs.push(job);
     }
 
+    result = Imbal::Schedule(m, jobs);
+    printf("%d\n", result);
     result = List::Schedule(m, jobs);
     printf("%d\n", result);
 
