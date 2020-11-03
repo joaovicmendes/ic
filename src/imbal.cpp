@@ -2,14 +2,14 @@
 #include <queue>
 #include "./imbal.h"
 
-unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> job_list)
+unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> job_list, double c)
 {
     unsigned int k, i, makespan;
-    double c, alpha, total_avg = 0, smaller_avg = 0;
+    double alpha, total_avg = 0, smaller_avg = 0;
     unsigned int *loads = new unsigned int[no_machines];
 
-    c = 1.92009433771; // 1 + sqrt((1 + log(2))/2)
-    i = ceil(1.2269471571379933 * no_machines/c) - 1;
+    // Por padrão, c = 1 + sqrt((1 + log(2))/2) ~= 1.92009433771 
+    i = ceil((5*c - 2*pow(c, 2) - 1)*no_machines/c) - 1;
     k = 2*i - no_machines;
     alpha = (2*c-2)/(2*c-3);
 

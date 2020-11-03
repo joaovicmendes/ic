@@ -12,7 +12,7 @@ class Imbal
         Saída:
             - (unsigned int) o makespan do escalonamento encontrado
     */
-    static unsigned int Schedule(unsigned int no_machines, std::queue<unsigned int> job_list);
+    static unsigned int Schedule(unsigned int no_machines, std::queue<unsigned int> job_list, double c=1.92009433771);
 
     private:
 
