@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <queue>
+#include <ctime>
 #include "./list.h"
 #include "./imbal.h"
 
@@ -48,13 +49,19 @@ int main(int argc, char **argv)
         jobs.push(job);
     }
 
-    // Escolhendo algoritmo informado
+    clock_t begin = clock();
+
+    // Escolhendo algoritmo adequado
     if (strcmp(argv[1], "LIST") == 0)
         result = List::Schedule(m, jobs);
     if (strcmp(argv[1], "IMBAL") == 0)
         result = Imbal::Schedule(m, jobs);
 
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+
     printf("%d\n", result);
+    printf("%lf\n", elapsed_secs);
 
     return 0;
 }
