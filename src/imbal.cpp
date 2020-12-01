@@ -8,6 +8,9 @@ unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> 
     double alpha, total_avg = 0, smaller_avg = 0;
     unsigned int *loads = new unsigned int[no_machines];
 
+    for (unsigned int i = 0; i < no_machines; i++)
+        loads[i] = 0;
+
     // Por padrão, c = 1 + sqrt((1 + log(2))/2) ~= 1.92009433771 
     i = ceil((5*c - 2*pow(c, 2) - 1)*no_machines/c) - 1;
     k = 2*i - no_machines;
@@ -20,8 +23,8 @@ unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> 
         job_list.pop();
 
         // Atualiza média total e média das menos carregadas
-        total_avg += job/no_machines;
-        smaller_avg = Imbal::get_average_load(no_machines, loads, i+1, no_machines);
+        total_avg += (double)job/no_machines;
+        smaller_avg = Imbal::get_average_load(no_machines, loads, i+1, no_machines); // Otimizar
 
         // Decisão gulosa: se o escalonamento for plano E a carga i não passar em c vezes a média total, escalona
         // em i, caso contrário, escalona na última máquina (no_machines-1)
@@ -33,7 +36,7 @@ unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> 
         else
         {
             loads[no_machines-1] += job;
-            Imbal::sort(no_machines, loads, no_machines-1);
+            Imbal::sort(no_machines, loads, no_machines-1); // <-- atualizar para otimização
         }
     }
 
@@ -70,5 +73,5 @@ double Imbal::get_average_load(unsigned int no_machines, unsigned int *loads, un
     for (unsigned int i = lower; i < upper; i++)
         avg += loads[i];
 
-    return avg/no_machines;
+    return (double)avg/(upper-lower);
 }
