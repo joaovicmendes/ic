@@ -3,6 +3,9 @@ import sys
 
 # Obtendo todos os casos de teste
 test_cases = os.listdir("./../test/")
+for test in test_cases:
+    if test.endswith(".metadata"):
+        test_cases.remove(test)
 
 # Obtendo os algoritmos disponíveis
 os.system('./../src/main --help > algoritmos')
