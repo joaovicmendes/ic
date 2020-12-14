@@ -23,8 +23,8 @@ def write_test_metadata(path, number_of_machines, jobs):
     content += "Número de tarefas: " + str(len(jobs)) + "\n"
     content += "Menor tarefa: " + str(min(jobs)) + "\n"
     content += "Maior tarefa: " + str(max(jobs)) + "\n"
-    content += "Média do tamanho das tarefas: " + str(sum(jobs)/len(jobs)) + "\n"
-    content += "Carga média por máquina: " + str(sum(jobs)/number_of_machines) + "\n"
+    content += "Média do tamanho das tarefas: {:.4f}".format(sum(jobs)/len(jobs)) + "\n"
+    content += "Carga média por máquina: {:.4f}".format(sum(jobs)/number_of_machines) + "\n"
 
     file = open(path, "w")
     file.write(content)
