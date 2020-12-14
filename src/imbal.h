@@ -17,6 +17,9 @@ class Imbal
     private:
 
     /* Função interna que reordena máquinas quando uma é alterada */
+    static void update(unsigned int no_machines, unsigned int *loads, unsigned int index, unsigned int avg_delim, unsigned int job, double *avg);
+
+    /* Função interna que reordena máquinas quando uma é alterada */
     static void sort(unsigned int no_machines, unsigned int *loads, unsigned int index = 0);
     
     /* Função interna que calcula a média das máquinas no intervalo i..j */
