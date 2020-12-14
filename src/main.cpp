@@ -22,6 +22,8 @@ int main(int argc, char **argv)
         printf("Lista de algoritmos disponíveis:\n");
         printf("    LIST\n");
         printf("    IMBAL\n");
+        printf("    IMBAL1.725\n");
+        printf("    IMBAL1.75\n");
         exit(0);
     }
 
@@ -56,6 +58,10 @@ int main(int argc, char **argv)
         result = List::Schedule(m, jobs);
     if (strcmp(argv[1], "IMBAL") == 0)
         result = Imbal::Schedule(m, jobs);
+    if (strcmp(argv[1], "IMBAL1.725") == 0)
+        result = Imbal::Schedule(m, jobs, 1.725);
+    if (strcmp(argv[1], "IMBAL1.75") == 0)
+        result = Imbal::Schedule(m, jobs, 1.75);
 
     clock_t end = clock();
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
