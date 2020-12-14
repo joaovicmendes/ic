@@ -2,10 +2,11 @@ import os
 import sys
 
 # Obtendo todos os casos de teste
-test_cases = os.listdir("./../test/")
-for test in test_cases:
-    if test.endswith(".metadata"):
-        test_cases.remove(test)
+raw_tests = os.listdir("./../test/")
+tests = []
+for test in raw_tests:
+    if not test.endswith(".metadata"):
+        tests.append(test)
 
 # Obtendo os algoritmos disponíveis
 os.system('./../src/main --help > algoritmos')
@@ -29,9 +30,9 @@ if len(sys.argv) > 1 and sys.argv[1].upper() != "ALL":
 
 # Execução dos testes
 for algorithm in algorithms:
-    for test in test_cases:
+    for test in tests:
         sol_path = "./../sols/" + algorithm + "/" + test + ".sol"
         test_path = "./../test/" + test
         # Execução de um caso de teste
-        os.system("./../src/main " + algorithm + " " + test_path + " > " + sol_path)
         print(f"Executando {algorithm} {test}")
+        os.system("./../src/main " + algorithm + " " + test_path + " > " + sol_path)
