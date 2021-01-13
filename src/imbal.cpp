@@ -24,7 +24,6 @@ unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> 
 
         // Atualiza média total e média das menos carregadas
         total_avg += (double)job/no_machines;
-        // smaller_avg = Imbal::get_average_load(no_machines, loads, i+1, no_machines);
 
         // Decisão gulosa: se o escalonamento for plano E a carga i não passar em c vezes a média total, escalona
         // em i, caso contrário, escalona na última máquina (no_machines-1)
@@ -49,30 +48,23 @@ unsigned int Imbal::Schedule(unsigned int no_machines, std::queue<unsigned int> 
 
 void Imbal::update(unsigned int no_machines, unsigned int *loads, unsigned int index, unsigned int avg_delim, unsigned int job, double *avg)
 {
+    unsigned int aux;
     unsigned int load_wout_job = loads[index]-job;
-    bool swapped = true;
 
-    while (swapped && index > 0)
+    aux = loads[index];
+    while (index > 0 && aux > loads[index-1])
     {
-        if (loads[index] > loads[index-1])
+        // Otimização no cáculo da média da máquina menos carregada
+        if (index-1 == avg_delim)
         {
-            // Otimização no cáculo da média da máquina menos carregada
-            if (index-1 == avg_delim)
-            {
-                *avg -= (double)load_wout_job/(no_machines-avg_delim-1);
-                *avg += (double)loads[index-1]/(no_machines-avg_delim-1);
-            }
-
-            unsigned int aux = loads[index-1];
-            loads[index-1] = loads[index];
-            loads[index] = aux;
-
-            swapped = true;
-            index--;
+            *avg -= (double)load_wout_job/(no_machines-avg_delim-1);
+            *avg += (double)loads[index-1]/(no_machines-avg_delim-1);
         }
-        else
-            swapped = false;
+
+        loads[index] = loads[index-1];
+        index--;
     }
+    loads[index] = aux;
 
     if (index > avg_delim)
         *avg += (double)job/(no_machines-avg_delim-1);
